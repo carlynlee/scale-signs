@@ -71,20 +71,22 @@ This is available in both Schedule and Room views
 examples: 
 * `http://signs.scale.lan/?year=2019&month=3&day=7&hour=9&minute=10`
 * `http://signs.scale.lan/?room=ballroom-de&year=2019&month=3&day=8&hour=14&minute=33`
+> **NOTE:** This will not work unless `$starttime` is correctly set for the current year of the show
 
 ### Yearly Tasks
 
 There is a bit of manual effort necessary from year to year. These tasks include, but might not be limitted to:
-* update the logo for the curent year at `/server/images/header.png`
+* update the logo for the curent year at `/server/images/header.png` should be `360x170px`
 * Do a search and replace for the previous scale version (example: replace all occurances of 16x with 17x)
 * verify proper XML is being supplied by drupal from the url reflected in the `$url` variable in `room.php` and `scroll.php`
-* set `$starttime` in `scroll.php` which should reflect midnight of the first night of current year show
+* set `$starttime` in `scroll.php` which should reflect midnight of the first night of current year show. Example: if the show starts on 3/14/24, then the entry for startime should be: `$starttime = mktime(0, 0, 0, 3, 14, 2024) / 60;`.
 * set `$starttime` in `room.php` to match scroll.php
 * set `$room_lookup_table` in `room.php` to match all rooms being used for the current year
 * set `$room_lookup_table` in `index.php` to match the one in `room.php`
 * update `$shorten_topics` in `scroll.php` to reflect the updated track list, matching exactly the keys to what is being supplied by the xml from drupal minus spaces
 * update `$shorten_topics` in `room.php` to match `scroll.php`
 * create a style for each of the keys in `$shorten_topics` in `style.css` matching it to the public site
+* add colors for topics/tracks in `/server/style.css`
 * update the sponsor images in `/server/images/sponsors/` to reflect the current year's sponsors, making them 220x220
 * update `$sponsors` in `room.php` matching the value to each sponsor image file name
 * update `$sponsors_to_rooms` in `room.php` matching proper sponsor(s) to room and day by key from `$sponsors`

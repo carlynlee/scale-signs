@@ -3,18 +3,11 @@
 date_default_timezone_set('America/Los_Angeles');
 
 # set yearly (change if DST starts during SCaLE)
-
 # before "spring forward"
-#$starttime = mktime(0, 0, 0, 3, 5, 2020) / 60;
-#$starttime = mktime(0, 0, 0, 3, 9, 2023) / 60;
 
 # after "spring forward"
-# 18x
-#$starttime = mktime(23, 0, 0, 3, 4, 2020) / 60;
-# 19x starts 7/27/2022 23:00
-#$starttime = mktime(23, 0, 0, 7, 27, 2022) / 60;
-# 20x
-$starttime = mktime(23, 0, 0, 3, 8, 2023) / 60;
+# 21x
+$starttime = mktime(0, 0, 0, 3, 14, 2024) / 60;
 
 // Turn off all error reporting
 error_reporting(0);
@@ -48,26 +41,32 @@ $order = array();
 $times = array();
 
 $shorten_topics = array(
-	"Aerospace"      =>	"Aerospace",
-	"BoFs"           =>	"BoFs",
-	"CareerDay"      =>	"Career Day",
-	"CloudNative"    =>	"CloudNative",
-	"Developer"      =>	"Developer",
-	"DevOpsDayLA"    =>	"DevOps",
-	"Embedded"    =>	"Embedded",
-	"FOSS@HOME"    =>	"FOSS@HOME",
-	"General"        =>	"General",
-	"Keynote"        =>	"Keynote",
-	"KubernetesCommunityDay"        =>	"Kubernetes Community Day",
-	"MySQL"          =>	"MySQL",
-	"NextGeneration"  =>	"Next Generation",
-	"Observability"  =>	"Observability",
-	"OpenData"	 =>	"Open Data",
-	"OpenGovernment" =>	"Open Government",
-	"PosgreSQL"      =>	"PostgreSQL",
-	"Security"       =>	"Security",
-	"Sponsored"      =>	"Sponsored",
-	"SystemsandInfrastructure" =>	"Systems and Infrastructure",
+ "CareerDay"	=>	 "Career Day",
+ "CloudNative"	=>	 "Cloud Native",
+ "DataonKubernetes"	=>	 "Data on Kubernetes",
+ "Developer"	=>	 "Developer",
+ "DevOpsDayLA"	=>	 "DevOpsDay LA",
+ "Embedded"	=>	 "Embedded",
+ "FOSSHOME"	=>	 "FOSS@HOME",
+ "General"	=>	 "General",
+ "KernelandLowLevelSystems"	=>	 "Kernel and Low Level Systems",
+ "Keynote"	=>	 "Keynote",
+ "KubernetesCommunityDay"	=>	 "Kubernetes Community Day",
+ "MySQL"	=>	 "MySQL",
+ "NextGeneration"	=>	 "Next Generation",
+ "NixCon"	=>	 "NixCon",
+ "Observability"	=>	 "Observability",
+ "OpenGovernment"	=>	 "Open Government",
+ "OpenSourceAIandAppliedScience"	=>	 "Open Source AI and Applied Science",
+ "PostgreSQL"	=>	 "PostgreSQL",
+ "ReproducibleandImmutableSoftware"	=>	 "Reproducible and Immutable Software",
+ "Security"	=>	 "Security",
+ "Sponsored"	=>	 "Sponsored",
+ "SystemsandInfrastructure"	=>	 "Systems and Infrastructure",
+ "Ubucon"	=>	 "Ubucon",
+ "UpSCALE"	=>	 "UpSCALE",
+ "Workshops"	=>	 "Workshops"
+
 );
 
 foreach ($xml->node AS $node) {
@@ -76,9 +75,10 @@ foreach ($xml->node AS $node) {
   $node->{'Time'} = preg_replace('/<[^>]*>/', '', $node->{'Time'});
   $node->{'Day'} = preg_replace('/<[^>]*>/', '', $node->{'Day'});
   
-  // Remove Spaces so we can use it for a CSS class
+  // Remove special chars in Topic from XML request so we can use it for a CSS class
   $node->{'Topic'} = preg_replace('/\s+/', '', $node->{'Topic'});
   $node->{'Topic'} = preg_replace('/\&/', 'and', $node->{'Topic'});
+  $node->{'Topic'} = preg_replace('/\@/', '', $node->{'Topic'});
 
 	$pos = strpos((string) $node->{'Time'}, ",");
 	$lpos = strrpos((string) $node->{'Time'}, ",");
